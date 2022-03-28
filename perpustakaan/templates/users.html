@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        <a href="{% url 'signup' %}" class="btn btn-primary">TAMBAH USER</a>
+      </h3>
+
+      {% for message in messages %}
+        {% if message %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endif %}
+      {% endfor %}
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>NO.</th>
+            <th>USERNAME</th>
+            <th>STAFF</th>
+            <th>SUPERUSER</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ forloop.counter }}.</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.is_staff }}</td>
+            <td>{{ user.is_superuser }}</td>
+            <td>
+              <button data-toggle="modal" data-target="#hapus-{{ user.id }}" class="btn btn-danger">Hapus</button>
+            </td>
+
+            <div class="modal" id="hapus-{{ buku.id }}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="modal-tittle">
+                       <h3>HAPUS</h3>
+                    </div>
+                  </div>
+                  <div class="modal-body">
+                     apakah anda yakin ingin menghapus <strong>{{ buku.judul | upper }}</strong>?
+                  </div>
+                  <div class="modal-footer">
+                     <a href="{% url 'hapus_users' user.id %}" class="btn btn-danger">Hapus</a>
+                     <button class="btn btn-dark" data-dismiss="modal">Tidak</button> 
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+ <div class="container">
+   <div class="row">
+     <div class="col-md-12">
+      <h3>
+        <a href="{% url 'tambah_kelompok' %}" class="btn btn-primary">+TAMBAH DATA</a>
+        <a href="{% url 'export_xlsx' %}" class="btn btn-success">EXPORT.XLS</a>
+      </h3>
+       <table class="table table-bordered table-striped">
+         <thead>
+           <tr>
+              <th>NAMA</th>    
+              <th>KETERANGAN</th>
+              <th> </th>    
+           </tr>
+
+         </thead>
+         <tbody>
+           {% for kelompok in group %}
+            <tr>
+              <td><a href="{% url 'ubah_kelompok' kelompok.id %}">{{ kelompok.nama }}</a></td>
+              <td>{{ kelompok.keterangan }}</td>
+              <td>
+                <button data-toggle="modal" data-target="#hapus-{{ kelompok.id }}" class="btn btn-danger">HAPUS</button>
+              </td>
+
+              <div class="modal" id="hapus-{{ kelompok.id }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-tittle">
+                         <h3>HAPUS</h3>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                       apakah anda yakin ingin menghapus <strong>{{ kelompok.nama | upper }}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                       <a href="{% url 'hapus_kelompok' kelompok.id %}" class="btn btn-danger">Hapus</a>
+                       <button class="btn btn-dark" data-dismiss="modal">Tidak</button> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </tr>
+           {% endfor %}
+
+         </tbody>
+       </table>
+     </div>
+   </div>
+ </div>
+ 
+
+ 
+ 
+{% endblock %}
